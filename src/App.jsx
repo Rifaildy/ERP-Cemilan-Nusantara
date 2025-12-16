@@ -15,7 +15,6 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-// --- KOMPONEN: HALAMAN LOGIN ---
 const LoginPage = () => {
   const { login, loading, error } = useAuth();
   const [username, setUsername] = useState('');

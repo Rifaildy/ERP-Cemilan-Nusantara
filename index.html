@@ -1,12 +1,55 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cemilan-nusantara-erp</title>
+    <title>Sistem ERP - CV. Cemilan Nusantara</title>
+    
+    <!-- 1. Load Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 2. Konfigurasi Custom Theme (Tema Makanan Ringan) -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              // Palet Makanan Ringan & Enterprise
+              primary: {
+                50: '#fff7ed',
+                100: '#ffedd5',
+                500: '#f97316', // Orange utama (Warna Singkong Keju/Bumbu Balado)
+                600: '#ea580c', // Hover state
+                700: '#c2410c',
+              },
+              secondary: {
+                500: '#eab308', // Kuning (Minyak/Keripik)
+                600: '#ca8a04',
+              },
+              corporate: {
+                50: '#f8fafc', // Background app (sangat muda)
+                100: '#f1f5f9', // Background panel
+                200: '#e2e8f0', // Border
+                800: '#1e293b', // Text heading
+                900: '#0f172a', // Sidebar bg (Dark Blue Professional)
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Font Inter agar terlihat profesional -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+    </style>
   </head>
-  <body>
+  <body class="bg-corporate-50 text-slate-600 antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

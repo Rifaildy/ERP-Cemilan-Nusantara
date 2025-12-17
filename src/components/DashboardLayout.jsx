@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import { LogOut, Menu, Bell, ChevronRight } from "lucide-react"
 
-const DashboardLayout = ({ children, menuItems }) => {
+const DashboardLayout = ({ children, menuItems, currentPage, setCurrentPage }) => {
   const { user, logout } = useAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -48,21 +48,31 @@ const DashboardLayout = ({ children, menuItems }) => {
 
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {menuItems.map((menu, idx) => (
-            <button
-              key={idx}
-              className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors
-                ${
-                  menu.active
-                    ? "bg-primary-600 text-white shadow-lg shadow-primary-900/20"
-                    : "text-gray-400 hover:bg-corporate-800 hover:text-white"
-                }
-              `}
-            >
-              <menu.icon className="w-5 h-5 flex-shrink-0" />
-              <span className="truncate">{menu.label}</span>
-            </button>
-          ))}
+          {menuItems.map((menu, idx) => {
+            const isActive = menu.page ? currentPage === menu.page : menu.page === "dashboard"
+
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  if (setCurrentPage && menu.page) {
+                    setCurrentPage(menu.page)
+                  }
+                  setSidebarOpen(false)
+                }}
+                className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-colors
+                  ${
+                    isActive
+                      ? "bg-primary-600 text-white shadow-lg shadow-primary-900/20"
+                      : "text-gray-400 hover:bg-corporate-800 hover:text-white"
+                  }
+                `}
+              >
+                <menu.icon className="w-5 h-5 flex-shrink-0" />
+                <span className="truncate">{menu.label}</span>
+              </button>
+            )
+          })}
         </nav>
 
         {/* Logout Button */}

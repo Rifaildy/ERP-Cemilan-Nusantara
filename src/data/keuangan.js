@@ -415,3 +415,38 @@ export const biayaOperasional = [
     status: "Paid",
   },
 ]
+
+export const transaksiKas = [
+  ...arusKasMasuk.map((item) => ({
+    id: item.id,
+    tanggal: item.tanggal,
+    deskripsi: item.sumber,
+    referensi: item.referensi,
+    pihak: item.customer,
+    masuk: item.jumlah,
+    keluar: 0,
+    saldo: 0,
+    kategori: item.kategori,
+    akun: item.akun.nama,
+  })),
+  ...arusKasKeluar.map((item) => ({
+    id: item.id,
+    tanggal: item.tanggal,
+    deskripsi: item.tujuan,
+    referensi: item.referensi,
+    pihak: item.supplier,
+    masuk: 0,
+    keluar: item.jumlah,
+    saldo: 0,
+    kategori: item.kategori,
+    akun: item.akun.nama,
+  })),
+]
+  .sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal))
+  .map((item, idx, arr) => {
+    const prevSaldo = idx === 0 ? 500000000 : arr[idx - 1].saldo
+    return {
+      ...item,
+      saldo: prevSaldo + item.masuk - item.keluar,
+    }
+  })

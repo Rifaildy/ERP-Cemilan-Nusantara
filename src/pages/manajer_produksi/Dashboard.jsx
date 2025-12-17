@@ -2,17 +2,17 @@ import DashboardLayout from "../../components/DashboardLayout"
 import StatCard from "../../components/StatCard"
 import { LayoutDashboard, Factory, BarChart3, Settings, FileText, Lightbulb } from "lucide-react"
 
-const ManajerProduksiDashboard = () => {
+const ManajerProduksiDashboard = ({ setCurrentPage }) => {
   const menuItems = [
-    { icon: LayoutDashboard, label: "Dashboard", active: true },
-    { icon: BarChart3, label: "Laporan Produksi", active: false },
-    { icon: Lightbulb, label: "Simulasi Kapasitas", active: false },
-    { icon: FileText, label: "Formula & Resep", active: false },
-    { icon: Settings, label: "Master Data Produk", active: false },
+    { icon: LayoutDashboard, label: "Dashboard", page: "dashboard" },
+    { icon: BarChart3, label: "Laporan Produksi", page: "laporan-produksi" },
+    { icon: Lightbulb, label: "Simulasi Kapasitas", page: "simulasi-kapasitas" },
+    { icon: FileText, label: "Formula & Resep", page: "formula-resep" },
+    { icon: Settings, label: "Master Data Produk", page: "master-data-produk" },
   ]
 
   return (
-    <DashboardLayout menuItems={menuItems}>
+    <DashboardLayout menuItems={menuItems} currentPage="dashboard" setCurrentPage={setCurrentPage}>
       <div className="bg-gradient-to-r from-amber-600 to-amber-800 rounded-2xl p-6 text-white shadow-xl mb-8">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">Manajer Produksi</h1>
         <p className="text-amber-100">Analisis produksi dan simulasi kapasitas real-time</p>

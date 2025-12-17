@@ -448,6 +448,20 @@ export const stokBahanBaku = [
   },
 ]
 
+export const stokBahan = stokBahanBaku
+
+// Calculate total stock by combining all batches per bahan
+export const getTotalStok = (bahanId) => {
+  return stokBahanBaku.filter((s) => s.bahanId === bahanId).reduce((sum, s) => sum + s.stok, 0)
+}
+
+// Get bahan with stock info
+export const bahanBakuWithStock = bahanBaku.map((bahan) => ({
+  ...bahan,
+  qty: getTotalStok(bahan.id),
+  minStock: bahan.stokMinimum,
+}))
+
 export const purchaseOrders = [
   {
     id: "PO20240118001",

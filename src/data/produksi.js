@@ -327,3 +327,5 @@ export const kapasitasMesin = [
   { id: "MSN005", nama: "Mesin Pengemas 2", kapasitasHarian: 25, satuan: "batch", status: "Aktif" },
   { id: "MSN006", nama: "Mesin Slicing", kapasitasHarian: 30, satuan: "batch", status: "Aktif" },
 ]
+
+export const orderProduksi = pesananProduksi

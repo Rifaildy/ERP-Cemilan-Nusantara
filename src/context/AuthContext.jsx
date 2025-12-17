@@ -1,45 +1,51 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { USERS, loginSimulation } from '../data/users';
+"use client"
 
-const AuthContext = createContext();
+import { createContext, useContext, useState, useEffect } from "react"
+import { loginSimulation } from "../data/users"
+
+const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    // Ambil data dari local storage saat refresh
-    const savedUser = localStorage.getItem('erp_user');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // Check localStorage on mount
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user")
+    if (savedUser) {
+      setUser(JSON.parse(savedUser))
+    }
+  }, [])
 
   const login = async (username, password) => {
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
     try {
-      const loggedInUser = await loginSimulation(username, password);
-      setUser(loggedInUser);
-      localStorage.setItem('erp_user', JSON.stringify(loggedInUser));
-      return loggedInUser;
+      const userData = await loginSimulation(username, password)
+      setUser(userData)
+      localStorage.setItem("user", JSON.stringify(userData))
+      return userData
     } catch (err) {
-      setError(err);
-      throw err;
+      setError(err)
+      throw err
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('erp_user');
-    // Opsional: Redirect manual jika perlu
-  };
+    setUser(null)
+    localStorage.removeItem("user")
+  }
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout, loading, error }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  return <AuthContext.Provider value={{ user, login, logout, loading, error }}>{children}</AuthContext.Provider>
+}
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error("useAuth must be used within AuthProvider")
+  }
+  return context
+}
